@@ -100,9 +100,9 @@ The following is for setting up a locally run solution from your desktop.
   * manual setup:
     * open "Component Services" Hit `Windows Key + r` and type `Component Services`
     * create an empty COM+ Application (Server Application) and call it "`MADEVCOM`"
-      * ![ ](https://github.com/smhoff/NotesFromSetup/blob/main/images/complus1.png)
-      * ![ ](https://github.com/smhoff/NotesFromSetup/blob/main/images/complus2.png)
-      * ![ ](https://github.com/smhoff/NotesFromSetup/blob/main/images/complus3.png)
+       ![ ](https://github.com/smhoff/NotesFromSetup/blob/main/images/complus1.png)
+       ![ ](https://github.com/smhoff/NotesFromSetup/blob/main/images/complus2.png)
+       ![ ](https://github.com/smhoff/NotesFromSetup/blob/main/images/complus3.png)
         right click and select `create new application` 
       * Set application identity to user Your user
       * User "CreaterOwner"
