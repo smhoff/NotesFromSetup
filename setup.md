@@ -76,12 +76,12 @@ The following is for setting up a locally run solution from your desktop.
          * You can also hit the `Windows Key + r` and type `Odbcad32.exe`
   * select "System DSN" tab
   * create "SQL Server" DSN's for the following (with sql server authentication):
-    * Core - point to "`core`" db on your dev server, using your user/password
+    * Core - point to "`core`" db on your dev server _(address ?)_, using your user/password
     * Disaster - point to "`disaster`" db on your dev server, using your user/password
     * maDataPump - point to "`maFinance`" db on your dev server, using your user/password
-* get the latest "APPS" packages (com+, Interop/Gac and optionally, installer files... if you need more functionality) and place on the "D" drive under: "`D:\Apps`" 
+* get the latest "APPS" packages (com+, Interop/Gac and optionally, installer files... if you need more functionality) and place on the "D" drive under: "`D:\Apps`" _What if you don't have a D drive?_
   > You will need a "D" drive anyway, as there are multiple hardcoded drive paths in the code!... for now. 
-  > Eventually we will create nuGet packages for these, but for now, You can pull them from DEV
+  > Eventually we will create nuGet packages for these, but for now, You can pull them from _(what is the dev server path?)_ DEV
   * COM/GAC/INTEROP - all in "`/MA_PACKAGES/current`"
     * copy "`/MA_PACKAGES/current/apps`" -> "`D:\Apps`"
       * COM+: `/MA_PACKAGES/current/Apps/COM+/`
@@ -98,8 +98,9 @@ The following is for setting up a locally run solution from your desktop.
   * auto setup (TBD):
     * (todo: nuGet... coming soon)
   * manual setup:
-    * open "Component Services"
+    * open "Component Services" Hit `Windows Key + r` and type `Component Services`
     * create an empty COM+ Application (Server Application) and call it "`MADEVCOM`"
+      * ![Select COM+ Applications](https://github.com/smhoff/NotesFromSetup/blob/main/images/complus1.png)
       * Set application identity to user Your user
       * User "CreaterOwner"
       * open properties and Traverse to the Security tab
