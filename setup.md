@@ -2,16 +2,18 @@
 * ~~Visual Studio 2017~~ Visual Studio 2019 [Visual Studio Download](https://visualstudio.microsoft.com/downloads/)
 * Visual Basic 6.0 (if editing COM+ or legacy apps) [Visual Basic 6.0 dowload for Windows 10](https://www.microsoft.com/en-us/download/details.aspx?id=5721)
 * SQL Server Management Studio (version ~~?~~ 18.7) [SSMS 18.7 download link](https://aka.ms/ssmsfullsetup)
-
+* A D: partition _(this is required due to hard-coded paths in the app.)_
+* NodeJS, npm Angular CLI
 ## Installation Instructions:
 > Note: it is important that you do the first 2 step before cloning the repo (or large binary files may not work correctly)
-* download and install git: https://git-scm.com/downloads
-  * you should use version `??` + (or run "`?????`")
+1. download and install git: https://git-scm.com/downloads
+     * you should use version `??` + (or run `?????`")
 
-* download and install git-lfs: https://git-lfs.github.com/
-  * open "git bash" (windows search) Another excellent cli replacement is cmder can be installed using chocolatey. 
-    * [Chocolatey Package Manager for Windows](https://chocolatey.org/)
-    * [Cmder](https://chocolatey.org/packages/Cmder)
+1. download and install git-lfs: https://git-lfs.github.com/
+     * open "git bash" (windows search) 
+     * Another excellent cli replacement is cmder can be installed using chocolatey. 
+       * [Chocolatey Package Manager for Windows](https://chocolatey.org/)
+       * [Cmder](https://chocolatey.org/packages/Cmder)
   * at the "$" prompt, type; `git lfs install`, and press enter.
 
 * clone repo 
@@ -70,61 +72,88 @@ The following is for setting up a locally run solution from your desktop.
         </appSettings>
 </configuration>
 ```
-* setup system DSNs (odbc 32-bit)
-  * open ODBC Data Source Administrator (32-bit)
-    * In Windows ~~7~~ 10, navigate to: `%systemdrive%\Windows\SysWoW64` folder and run `Odbcad32.exe`
-         * You can also hit the `Windows Key + r` and type `Odbcad32.exe`
-  * select "System DSN" tab
-  * create "SQL Server" DSN's for the following (with sql server authentication):
-    * Core - point to "`core`" db on your dev server _(address ?)_, using your user/password
-    * Disaster - point to "`disaster`" db on your dev server, using your user/password
-    * maDataPump - point to "`maFinance`" db on your dev server, using your user/password
-* get the latest "APPS" packages (com+, Interop/Gac and optionally, installer files... if you need more functionality) and place on the "D" drive under: "`D:\Apps`" _What if you don't have a D drive?_
+- [x] setup system DSNs (odbc 32-bit)
+  1. open ODBC Data Source Administrator (32-bit)
+    In Windows ~~7~~ 10, navigate to: `%systemdrive%\Windows\SysWoW64` folder and run `Odbcad32.exe`
+    You can also hit the `Windows Key + r` and type `Odbcad32.exe`
+  1. Select "System DSN" tab   
+  1. Create "SQL Server" DSN's for the following (with sql server authentication):
+  1. Core - point to `core`" db on your dev server _(address ?)_, using your user/password
+  1. Disaster - point to `disaster`" db on your dev server, using your user/password
+  1. maDataPump - point to `maFinance`" db on your dev server, using your user/password
+- [x]  get the latest "APPS" packages (com+, Interop/Gac and optionally, installer files... if you need more functionality) and place on the "D" drive under: `D:\Apps`" _What if you don't have a D drive?_
   > You will need a "D" drive anyway, as there are multiple hardcoded drive paths in the code!... for now. 
   > Eventually we will create nuGet packages for these, but for now, You can pull them from _(what is the dev server path?)_ DEV
-  * COM/GAC/INTEROP - all in "`/MA_PACKAGES/current`"
-    * copy "`/MA_PACKAGES/current/apps`" -> "`D:\Apps`"
+  1. COM/GAC/INTEROP - all in `/MA_PACKAGES/current`
+      * copy `/MA_PACKAGES/current/apps` -> `D:\Apps`
       * COM+: `/MA_PACKAGES/current/Apps/COM+/`
       * GAC: `/MA_PACKAGES/current/Apps/Dot.Net/GAC/`
       * INTEROP: `/MA_PACKAGES/current/Apps/Dot.Net/Interop/`
-  * INSTALLERS (if you need them) - pull directly "`dev/Apps`": 
-    * copy "`/Apps/Installers`" -> "D:\Apps\Installers" (**_note: not from the packages area_**)
-* run "`D:\Apps\Dot.Net\Interop\MaCOM\RegisterMACOM.bat`" (as admin)
-* run "`D:\Apps\Dot.Net\GAC\SecurityCryptography\Security.Cryptography.Install.bat`" (as admin)
+  * INSTALLERS (if you need them) - pull directly `dev/Apps`": 
+    * copy `/Apps/Installers`" -> "D:\Apps\Installers" (**_note: not from the packages area_**)
+   
+- [x] run `D:\Apps\Dot.Net\Interop\MaCOM\RegisterMACOM.bat`" (as admin)
+- [x] run `D:\Apps\Dot.Net\GAC\SecurityCryptography\Security.Cryptography.Install.bat`" (as admin)
   * If you are on Win7 (wtf man?) 
     * Traverse to directory `D:\Apps\Dot.Net\GAC\SecurityCryptography`. 
     * Drag and drop file `Security.Cryptography.dll` to directory `C:\Windows\assembly`. 
-* setup com+
-  * auto setup (TBD):
-    * (todo: nuGet... coming soon)
-  * manual setup:
+- [x] Setup COM+
+
+  <details><summary>Automated Setup (TBD):</summary>
+    * _(todo: nuGet... coming soon)_
+  </details>
+
+  <details><summary>Manual Setup</summary> 
     * open "Component Services" Hit `Windows Key + r` and type `Component Services`
-    * create an empty COM+ Application (Server Application) and call it "`MADEVCOM`"
-       ![ ](https://github.com/smhoff/NotesFromSetup/blob/main/images/complus1.png)
-       ![ ](https://github.com/smhoff/NotesFromSetup/blob/main/images/complus2.png)
-       ![ ](https://github.com/smhoff/NotesFromSetup/blob/main/images/complus3.png)
-        right click and select `create new application` 
-      * Set application identity to user Your user
-      * User "CreaterOwner"
-      * open properties and Traverse to the Security tab
-        * Uncheck "Enforce access checks for this application"
-        * Select "Perform access checks at the process and component level."
-    * Add new components from "`D:\Apps\COM+\`"
+            
+    - [x] _right click and select `create new application`_
+
+       ![ ](./images/complus1.png)
+
+    - [x] create an empty COM+ Application **(Server Application)**
+
+      ![ ](./images/complus2.png)
+
+    - [x] Name the application **`MADEVCOM`**
+
+      ![ ](./images/complus3.png)
+        
+    - [x] Set application identity to user Your user and click Next >
+
+      ![](./images/complus4.png)
+      
+    - [x] Click on the _CreaterOwner_ role and click Next >
+
+      ![](./images/complus5.png)
+
+
+    - [x] Right click on the application you just created and select properties 
+
+       ![ ](./images/complus6.png)
+      
+      1.Select the Security Tab
+        1. Uncheck "Enforce access checks for this application"
+        2. Select "Perform access checks at the process and component level."
+   
+      ![ ](./images/complus7.png)
+
+    * Add new components from `D:\Apps\COM+\`"
       * run "D:/Apps/com+/unregLocalCOMS.bat" as admin (wait for "pause..." to close)      
       * run "D:/Apps/com+/regLocalCOMS.bat" as admin (wait for "pause..." to close)
+  </details> 
 * Other Installs (TBD)
   * AspTreeView from Apps/Installers
 
 
 # Projects/Solutions
 
-The "`ManageAmerica.sln`" the main solution and should contain everything needed to run the site locally. Multiple solutions can be created if their focus is limited (or independent of) the main solution. However, any project that is dependent upon the compiled assembly of another project *MUST* be included in the project to ensure continuity.
+The `ManageAmerica.sln` the main solution and should contain everything needed to run the site locally. Multiple solutions can be created if their focus is limited (or independent of) the main solution. However, any project that is dependent upon the compiled assembly of another project *MUST* be included in the project to ensure continuity.
 
 All web pages housed within the main WebSite, should used the "CodeFile" attribute with their code file along side. Additionally, web pages (and their "source" files) should originate in the WebSite that will host them. The same goes for any other project (including other WebApp projects). 
 
 **DO NOT** create a separate WebApp and use a build-script to "_COPY_" files to their destination _host_ site
 
-## config files
+## Config Files
 Several files are intentionally excluded from the repo. These are file that would be different depending on the server or environment hosting the application. Each excluded file has a file counterpart that **will be** included in the repo (but not used in the solution). These all end with the .example extension. The files should be copied/pasted to their parent directories and edited per your system requirements.
 
 The following is a list of currently "excluded" files that may be "required" depending on the solution/project you are running.
@@ -159,12 +188,14 @@ Make sure to install Framework 4.7.2 in Visual Studio if it is not installed. To
 Within the Website project in the MA solution in Visual Studio, change your LOCAL version of the website/config/compilation.confg file to use 4.7.2:
 ```xml
 <compilation debug="true" targetFramework="4.7.2">
+
 ```
+_(can we update to 4.8?)_
 
 ## Setup IIS Express Cert
 * follow Resolution #2 here: https://blogs.msdn.microsoft.com/robert_mcmurray/2013/11/15/how-to-trust-the-iis-express-self-signed-certificate/ 
 <details><summary>Instructions from the above url (in case it gets taken down):</summary>
-<p>
+
 Resolution Number #2 - Configure your computer to trust the IIS Express Certificate
 A more-detailed approach is to configure your computer system to trust the IIS Express certificate, and you might want to do this if your computer is shared by several developers who log in with their individual accounts. To configure your computer to trust the IIS Express certificate, use the following steps:
 
@@ -211,7 +242,7 @@ A more-detailed approach is to configure your computer system to trust the IIS E
     * Take note of the "SSL URL"
   * right click on WebSite project and select "Property Pages"
     * select "Start Options"
-    * set "Start URL" to the "SSL url" for the site (above). e.g. "`https://localhost:44324/`"
+    * set "Start URL" to the "SSL url" for the site (above). e.g. `https://localhost:44324/`"
 * Setup Solution
   * right click on Solution and select "Properties"
   * set "Startup Project" to "Single startup project" -> "WebSite"
@@ -224,7 +255,7 @@ A more-detailed approach is to configure your computer system to trust the IIS E
   * find the `.vs/config` folder and open it (also do this in `C:\Users\[your username]\Documents\IISExpress\config`)
   * open applicationhost.config 
     >  (for more info, see: https://stackoverflow.com/questions/4769751/how-to-set-allow-parent-paths-in-iis-express-config)
-    * add or set the "`enableParentPaths`" attribute of the `<asp>` node under the `<system.webServer>` to "`true`" (copy all if you also want debuging). Modify the system.webServer under the `<configuration>` node NOT under the `<location>` node.:
+    * add or set the `enableParentPaths`" attribute of the `<asp>` node under the `<system.webServer>` to `true`" (copy all if you also want debuging). Modify the system.webServer under the `<configuration>` node NOT under the `<location>` node.:
     ```xml
     <configuration>
         <system.webServer>
@@ -244,6 +275,5 @@ A more-detailed approach is to configure your computer system to trust the IIS E
     <add name="ExtensionlessUrl-Integrated-4.0" path="*." verb="*" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" responseBufferLimit="0" />
     ```
   
-
 * Return to browser and refresh
 
